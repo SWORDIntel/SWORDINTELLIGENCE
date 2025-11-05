@@ -10,7 +10,9 @@ import {
   TrendingUp,
   Download,
   MessageSquare,
+  Lock,
 } from 'lucide-react';
+import Link from 'next/link';
 import { AnimatedCounter } from '@/components/ui/animated-counter';
 
 export default function DashboardPage() {
@@ -205,6 +207,12 @@ export default function DashboardPage() {
           <div className="mt-8">
             <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
             <div className="space-y-2">
+              <Link href="/portal/vault" className="block w-full px-4 py-3 rounded-lg border border-green-500/50 bg-green-500/10 text-green-500 hover:bg-green-500/20 transition-colors">
+                <div className="flex items-center space-x-3">
+                  <Lock className="w-5 h-5" />
+                  <span className="text-sm font-semibold">Post-Quantum Vault</span>
+                </div>
+              </Link>
               <button className="w-full px-4 py-3 rounded-lg border border-border bg-surface hover:border-accent transition-colors text-left">
                 <div className="flex items-center space-x-3">
                   <MessageSquare className="w-5 h-5 text-accent" />
