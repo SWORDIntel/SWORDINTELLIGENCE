@@ -27,6 +27,7 @@
     "next": "^15.0.0",
     "next-auth": "^4.24.5",
     "next-mdx-remote": "^4.4.1",
+    "pngjs": "^7.0.0",
     "qrcode": "^1.5.3",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
