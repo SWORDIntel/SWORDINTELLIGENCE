@@ -14,6 +14,7 @@ import {
   LogOut,
   Shield,
   AlertTriangle,
+  Clock,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -25,6 +26,7 @@ export function PortalNav() {
     { href: '/portal/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/portal/vault', label: 'Document Vault', icon: FolderLock },
     { href: '/portal/messages', label: 'Secure Messages', icon: MessageSquare },
+    { href: '/portal/dead-drops', label: 'Dead Drops', icon: Clock },
     { href: '/portal/reports', label: 'Intel Reports', icon: FileText },
     { href: '/portal/billing', label: 'Billing', icon: CreditCard },
   ];
