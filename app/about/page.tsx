@@ -158,31 +158,34 @@ export default function AboutPage() {
                       RU
                     </div>
                     <div>
-                      <h3 className="text-xl font-semibold mb-3">Russian Technology Intelligence</h3>
+                      <h3 className="text-xl font-semibold mb-3">Russian Technology Access & Intelligence</h3>
                       <p className="text-muted leading-relaxed mb-3">
-                        Limited but strategically valuable access to Russian technology markets for <strong>intelligence and analysis purposes</strong>. This includes visibility into:
+                        <strong>Full access</strong> to Russian technology markets and computing resources for legitimate research, analysis, and threat intelligence purposes. Available capabilities include:
                       </p>
                       <ul className="space-y-2 text-muted text-sm">
                         <li className="flex items-start space-x-2">
                           <span className="text-accent">→</span>
-                          <span><strong>Advanced computing hardware</strong>: Assessment of Russian-developed AI accelerators and high-performance computing systems</span>
+                          <span><strong>Advanced computing resources</strong>: Access to Russian-developed computing systems, AI accelerators, and high-performance platforms for testing and evaluation</span>
                         </li>
                         <li className="flex items-start space-x-2">
                           <span className="text-accent">→</span>
-                          <span><strong>Dual-use technology tracking</strong>: Monitor commercial products with potential military or proliferation concerns</span>
+                          <span><strong>Technical acquisition & analysis</strong>: Procurement of hardware and software for reverse engineering, vulnerability assessment, and capability analysis</span>
                         </li>
                         <li className="flex items-start space-x-2">
                           <span className="text-accent">→</span>
-                          <span><strong>Sanctions evasion detection</strong>: Identify attempts to circumvent export controls or acquire restricted technology</span>
+                          <span><strong>Market intelligence</strong>: Monitor dual-use technology developments, emerging capabilities, and gray-market distribution channels</span>
                         </li>
                         <li className="flex items-start space-x-2">
                           <span className="text-accent">→</span>
-                          <span><strong>Technical capability assessment</strong>: Evaluate state-of-art in Russian cyber, AI, and simulation technologies for threat modeling</span>
+                          <span><strong>Threat actor procurement patterns</strong>: Track what adversaries are acquiring and how they're circumventing controls</span>
                         </li>
                       </ul>
                       <div className="mt-4 p-4 rounded bg-background border border-accent/20">
+                        <p className="text-xs text-muted mb-2">
+                          <strong>Compliance & Client Vetting:</strong> All engagements comply with applicable UK and U.S. law. This capability is available exclusively for legitimate research, defensive security analysis, law enforcement support, and threat intelligence purposes.
+                        </p>
                         <p className="text-xs text-muted">
-                          <strong>Important:</strong> All activities comply with applicable export controls, sanctions regimes, and UK/U.S. law. This capability is used exclusively for intelligence collection, threat analysis, and supporting lawful investigations—not for procurement or sanctions evasion. Engagements requiring analysis of controlled technology are conducted in coordination with legal counsel and, where appropriate, government authorities.
+                          <strong>Clients undergo rigorous background checks.</strong> We do not facilitate sanctions evasion, proliferation, or unlawful activity. Engagements involving controlled technology are conducted in coordination with legal counsel and documented for compliance. Premium pricing reflects sourcing complexity and legal risk management.
                         </p>
                       </div>
                     </div>
@@ -267,6 +270,69 @@ export default function AboutPage() {
                   <p className="text-muted">
                     We provide objective analysis without political or commercial bias. Our
                     assessments reflect what the evidence shows—not what anyone wants to hear.
+                  </p>
+                </div>
+                <div className="p-6 rounded-lg border border-accent/30 bg-surface">
+                  <h3 className="text-xl font-semibold mb-3">Rigorous Client Vetting</h3>
+                  <p className="text-muted">
+                    All prospective clients undergo background checks and conflict screening. We verify
+                    identity, business legitimacy, and ensure engagements comply with sanctions, export
+                    controls, and anti-money laundering requirements.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Client Vetting Process */}
+            <div>
+              <h2 className="text-3xl font-bold mb-8">Client Vetting & Compliance</h2>
+              <div className="p-8 rounded-lg border border-accent/30 bg-surface space-y-6">
+                <p className="text-lg leading-relaxed">
+                  Given the sensitive nature of our work—particularly access to strategic markets and
+                  dual-use technologies—we maintain <strong>rigorous client vetting procedures</strong> to
+                  ensure compliance with all applicable laws and prevent misuse of our services.
+                </p>
+
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold">Vetting Process</h3>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="p-4 rounded border border-border bg-background">
+                      <h4 className="font-semibold mb-2 text-sm">Identity & Entity Verification</h4>
+                      <p className="text-sm text-muted">
+                        KYC/KYB checks, beneficial ownership research, corporate registry validation,
+                        and verification of authority to engage our services.
+                      </p>
+                    </div>
+                    <div className="p-4 rounded border border-border bg-background">
+                      <h4 className="font-semibold mb-2 text-sm">Sanctions & Export Control Screening</h4>
+                      <p className="text-sm text-muted">
+                        Screening against OFAC SDN, UK sanctions lists, EU sanctions, and export control
+                        denied parties lists (BIS, DDTC).
+                      </p>
+                    </div>
+                    <div className="p-4 rounded border border-border bg-background">
+                      <h4 className="font-semibold mb-2 text-sm">Business Legitimacy Assessment</h4>
+                      <p className="text-sm text-muted">
+                        Review of stated business purpose, industry reputation, and red flags for front
+                        companies or shell entities.
+                      </p>
+                    </div>
+                    <div className="p-4 rounded border border-border bg-background">
+                      <h4 className="font-semibold mb-2 text-sm">Use Case Review</h4>
+                      <p className="text-sm text-muted">
+                        Assessment of intended use of our services to ensure legitimate purpose and
+                        compliance with end-use restrictions.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-border">
+                  <p className="text-sm text-muted">
+                    <strong>We reserve the right to decline engagements</strong> that present unacceptable
+                    legal risk, involve sanctioned parties, or lack clear legitimate purpose. Clients
+                    attempting to use our services for sanctions evasion, proliferation, or unlawful
+                    activity will be immediately terminated and reported to authorities as required by law.
                   </p>
                 </div>
               </div>
