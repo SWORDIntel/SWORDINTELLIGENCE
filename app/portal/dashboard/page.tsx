@@ -220,12 +220,12 @@ export default function DashboardPage() {
                   <span className="text-sm font-semibold">Canary Tokens</span>
                 </div>
               </Link>
-              <button className="w-full px-4 py-3 rounded-lg border border-border bg-surface hover:border-accent transition-colors text-left">
+              <Link href="/portal/messages" className="block w-full px-4 py-3 rounded-lg border border-blue-500/50 bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 transition-colors">
                 <div className="flex items-center space-x-3">
-                  <MessageSquare className="w-5 h-5 text-accent" />
-                  <span className="text-sm font-medium">Send Secure Message</span>
+                  <MessageSquare className="w-5 h-5" />
+                  <span className="text-sm font-semibold">Secure Messaging</span>
                 </div>
-              </button>
+              </Link>
               <button className="w-full px-4 py-3 rounded-lg border border-border bg-surface hover:border-accent transition-colors text-left">
                 <div className="flex items-center space-x-3">
                   <Download className="w-5 h-5 text-accent" />
