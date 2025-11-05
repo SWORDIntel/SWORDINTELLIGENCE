@@ -37,7 +37,7 @@ export default function KibanaPage() {
           <p className="text-yellow-500 text-sm font-semibold">Security Warning</p>
           <p className="text-yellow-300 text-xs mt-1">
             This Elasticsearch node is exposed to the public internet. Unauthorized access detected from 300+ IP addresses.
-            Directory listing is enabled. Please contact your administrator immediately.
+            Directory listing is enabled. Multiple anomalous files detected (96.4 TB copypasta variants). Please contact your administrator immediately.
           </p>
         </div>
       </div>
@@ -85,7 +85,7 @@ export default function KibanaPage() {
               <div className="col-span-1 text-gray-400">ZIP</div>
             </div>
 
-            {/* The Easter Egg */}
+            {/* The Easter Eggs - Multiple Variants */}
             <div className="px-4 py-3 grid grid-cols-12 gap-4 text-sm bg-red-500/5 hover:bg-red-500/10 transition-colors border-l-4 border-red-500">
               <div className="col-span-6 flex items-center space-x-2">
                 <HardDrive className="w-4 h-4 text-red-500 animate-pulse" />
@@ -95,6 +95,50 @@ export default function KibanaPage() {
               <div className="col-span-2 text-red-500 font-bold">24.7 TB</div>
               <div className="col-span-3 text-gray-400">2024-11-05 03:00:00</div>
               <div className="col-span-1 text-red-400">ZIP</div>
+            </div>
+
+            <div className="px-4 py-3 grid grid-cols-12 gap-4 text-sm bg-red-500/5 hover:bg-red-500/10 transition-colors border-l-4 border-orange-500">
+              <div className="col-span-6 flex items-center space-x-2">
+                <HardDrive className="w-4 h-4 text-orange-500 animate-pulse" />
+                <span className="text-orange-500 font-semibold">uwu_variant.bin</span>
+                <span className="text-xs text-orange-400 px-2 py-0.5 bg-orange-500/20 rounded">⚠ CURSED</span>
+              </div>
+              <div className="col-span-2 text-orange-500 font-bold">18.3 TB</div>
+              <div className="col-span-3 text-gray-400">2024-11-05 03:00:01</div>
+              <div className="col-span-1 text-orange-400">BIN</div>
+            </div>
+
+            <div className="px-4 py-3 grid grid-cols-12 gap-4 text-sm bg-red-500/5 hover:bg-red-500/10 transition-colors border-l-4 border-yellow-500">
+              <div className="col-span-6 flex items-center space-x-2">
+                <HardDrive className="w-4 h-4 text-yellow-500 animate-pulse" />
+                <span className="text-yellow-500 font-semibold">emoji_pasta.tar.gz</span>
+                <span className="text-xs text-yellow-400 px-2 py-0.5 bg-yellow-500/20 rounded">⚠ EXCESSIVE</span>
+              </div>
+              <div className="col-span-2 text-yellow-500 font-bold">31.2 TB</div>
+              <div className="col-span-3 text-gray-400">2024-11-05 03:00:02</div>
+              <div className="col-span-1 text-yellow-400">GZIP</div>
+            </div>
+
+            <div className="px-4 py-3 grid grid-cols-12 gap-4 text-sm bg-red-500/5 hover:bg-red-500/10 transition-colors border-l-4 border-purple-500">
+              <div className="col-span-6 flex items-center space-x-2">
+                <HardDrive className="w-4 h-4 text-purple-500 animate-pulse" />
+                <span className="text-purple-500 font-semibold">navy_seal_erotica.txt</span>
+                <span className="text-xs text-purple-400 px-2 py-0.5 bg-purple-500/20 rounded">⚠ WHY</span>
+              </div>
+              <div className="col-span-2 text-purple-500 font-bold">9.8 TB</div>
+              <div className="col-span-3 text-gray-400">2024-11-05 03:00:03</div>
+              <div className="col-span-1 text-purple-400">TXT</div>
+            </div>
+
+            <div className="px-4 py-3 grid grid-cols-12 gap-4 text-sm bg-red-500/5 hover:bg-red-500/10 transition-colors border-l-4 border-pink-500">
+              <div className="col-span-6 flex items-center space-x-2">
+                <HardDrive className="w-4 h-4 text-pink-500 animate-pulse" />
+                <span className="text-pink-500 font-semibold">vegan_variant.log</span>
+                <span className="text-xs text-pink-400 px-2 py-0.5 bg-pink-500/20 rounded">⚠ PEACEFUL</span>
+              </div>
+              <div className="col-span-2 text-pink-500 font-bold">12.4 TB</div>
+              <div className="col-span-3 text-gray-400">2024-11-05 03:00:04</div>
+              <div className="col-span-1 text-pink-400">LOG</div>
             </div>
 
             <div className="px-4 py-3 grid grid-cols-12 gap-4 text-sm hover:bg-[#1a1a1a] transition-colors">
@@ -159,24 +203,60 @@ export default function KibanaPage() {
             </div>
 
             <div>
-              <p className="text-gray-500 mb-2">File Header (hex dump):</p>
+              <p className="text-gray-500 mb-2">File Header (hex dump - shdb.zip):</p>
               <div className="bg-black p-4 rounded font-mono text-xs overflow-x-auto space-y-1">
-                <p className="text-gray-400">00000000: 5768 6174 2074 6865 2066 7563 6b20 6469  What.the....</p>
-                <p className="text-gray-400">00000010: 6420 796f 7520 6a75 7374 2066 7563 6b69  d.you.just....</p>
+                <p className="text-gray-400">00000000: 5768 6174 2074 6865 2066 7563 6b20 6469  What.the.fuck.di</p>
+                <p className="text-gray-400">00000010: 6420 796f 7520 6a75 7374 2066 7563 6b69  d.you.just.fucki</p>
                 <p className="text-gray-400">00000020: 6e67 2073 6179 2061 626f 7574 206d 6520  ng.say.about.me.</p>
-                <p className="text-gray-400">00000030: 796f 7520 6c69 7474 6c65 2062 6974 6368  you.little....</p>
+                <p className="text-gray-400">00000030: 796f 7520 6c69 7474 6c65 2062 6974 6368  you.little.bitch</p>
                 <p className="text-gray-400">00000040: 3f20 496c 6c20 6861 7665 2079 6f75 206b  ?.Ill.have.you.k</p>
                 <p className="text-gray-400">00000050: 6e6f 7720 4920 6772 6164 7561 7465 6420  now.I.graduated.</p>
+                <p className="text-gray-400">00000060: 746f 7020 6f66 206d 7920 636c 6173 7320  top.of.my.class.</p>
+                <p className="text-gray-400">00000070: 696e 2074 6865 204e 6176 7920 5365 616c  in.the.Navy.Seal</p>
                 <p className="text-yellow-500 mt-2">... repeats 82,320,206,506 times ...</p>
                 <p className="text-red-500 mt-2 font-bold">... over 300 confirmed kills ...</p>
               </div>
             </div>
 
+            <div className="mt-4">
+              <p className="text-gray-500 mb-2">Other Anomalous Files Detected:</p>
+              <div className="bg-black p-4 rounded font-mono text-xs space-y-2">
+                <div>
+                  <p className="text-orange-400">uwu_variant.bin (18.3 TB)</p>
+                  <p className="text-gray-400 ml-4">{">"} What's this? *notices ur gorilla warfare* OwO</p>
+                  <p className="text-gray-400 ml-4">{">"} I'll have you knyow I gwaduated top of my cwass...</p>
+                  <p className="text-gray-500 ml-4 text-[10px]">Contains: UwU-ified copypasta × 61,000,000,000 repetitions</p>
+                </div>
+
+                <div className="mt-2">
+                  <p className="text-yellow-400">emoji_pasta.tar.gz (31.2 TB)</p>
+                  <p className="text-gray-400 ml-4">{">"} What 😤 the fuck 🖕 did you 👈 just 👏 fucking 🍆 say 🗣️...</p>
+                  <p className="text-gray-400 ml-4">{">"} I 💪 have over 💯 300 ✔️ confirmed 💀 kills ☠️...</p>
+                  <p className="text-gray-500 ml-4 text-[10px]">Contains: Emoji variant × 104,000,000,000 repetitions</p>
+                </div>
+
+                <div className="mt-2">
+                  <p className="text-purple-400">navy_seal_erotica.txt (9.8 TB)</p>
+                  <p className="text-gray-400 ml-4">{">"} What the fuck did you just say about my body...</p>
+                  <p className="text-gray-500 ml-4 text-[10px]">[REDACTED - Extremely NSFW variant]</p>
+                  <p className="text-gray-500 ml-4 text-[10px]">Contains: Rule 34 adaptation × 32,666,666,666 repetitions</p>
+                </div>
+
+                <div className="mt-2">
+                  <p className="text-pink-400">vegan_variant.log (12.4 TB)</p>
+                  <p className="text-gray-400 ml-4">{">"} What did you just say about my kale smoothie...</p>
+                  <p className="text-gray-400 ml-4">{">"} I'll have you know I rescued over 300 animals...</p>
+                  <p className="text-gray-500 ml-4 text-[10px]">Contains: Vegan copypasta parody × 41,333,333,333 repetitions</p>
+                </div>
+              </div>
+            </div>
+
             <div className="pt-3 border-t border-[#333]">
               <p className="text-xs text-gray-500 italic">
-                Note: This file appears to contain the same text pattern repeated in binary format.
-                File creation appears to be the result of a misconfigured data deduplication script.
-                Estimated time to download on 1Gbps connection: ~57 years.
+                Note: All files appear to contain copypasta variants repeated in various formats.
+                File creation appears to be the result of a catastrophically misconfigured meme scraper.
+                Total storage consumed by copypasta: 96.4 TB (99.7% of available storage).
+                Estimated time to download shdb.zip on 1Gbps connection: ~57 years.
               </p>
             </div>
           </div>
@@ -207,8 +287,8 @@ export default function KibanaPage() {
               <HardDrive className="w-4 h-4 text-red-500" />
               <span className="text-gray-400">Storage</span>
             </div>
-            <p className="font-mono text-red-500">24.8 TB / 25 TB</p>
-            <p className="text-gray-500 mt-1">1 anomalous file</p>
+            <p className="font-mono text-red-500">96.7 TB / 97 TB</p>
+            <p className="text-gray-500 mt-1">5 copypasta files</p>
           </div>
         </div>
       </div>
