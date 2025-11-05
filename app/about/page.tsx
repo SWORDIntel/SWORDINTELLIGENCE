@@ -297,42 +297,57 @@ export default function AboutPage() {
                   <h3 className="text-xl font-semibold">Vetting Process</h3>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="p-4 rounded border border-border bg-background">
-                      <h4 className="font-semibold mb-2 text-sm">Identity & Entity Verification</h4>
+                      <h4 className="font-semibold mb-2 text-sm">Deep Background Investigation</h4>
                       <p className="text-sm text-muted">
-                        KYC/KYB checks, beneficial ownership research, corporate registry validation,
-                        and verification of authority to engage our services.
+                        Multi-source intelligence checks drawing on commercial databases, government sources,
+                        and partner networks across multiple jurisdictions. We find the truth—shell companies,
+                        complex structures, and operational security are expected in this industry.
                       </p>
                     </div>
                     <div className="p-4 rounded border border-border bg-background">
-                      <h4 className="font-semibold mb-2 text-sm">Sanctions & Export Control Screening</h4>
+                      <h4 className="font-semibold mb-2 text-sm">Sanctions & Watchlist Screening</h4>
                       <p className="text-sm text-muted">
-                        Screening against OFAC SDN, UK sanctions lists, EU sanctions, and export control
-                        denied parties lists (BIS, DDTC).
+                        Comprehensive screening against OFAC SDN, UK HM Treasury, EU sanctions, BIS denied
+                        parties, and other relevant control lists. Coordination with appropriate authorities
+                        where required.
                       </p>
                     </div>
                     <div className="p-4 rounded border border-border bg-background">
-                      <h4 className="font-semibold mb-2 text-sm">Business Legitimacy Assessment</h4>
+                      <h4 className="font-semibold mb-2 text-sm">Ultimate Beneficial Owner Analysis</h4>
                       <p className="text-sm text-muted">
-                        Review of stated business purpose, industry reputation, and red flags for front
-                        companies or shell entities.
+                        Full ownership mapping through corporate veils, nominee directors, and offshore
+                        structures. We assess true control and intent, not surface-level registrations.
                       </p>
                     </div>
                     <div className="p-4 rounded border border-border bg-background">
-                      <h4 className="font-semibold mb-2 text-sm">Use Case Review</h4>
+                      <h4 className="font-semibold mb-2 text-sm">End-Use & Intent Assessment</h4>
                       <p className="text-sm text-muted">
-                        Assessment of intended use of our services to ensure legitimate purpose and
-                        compliance with end-use restrictions.
+                        Intelligence-driven evaluation of stated use case against known patterns, technical
+                        indicators, and geopolitical context. We assess likelihood of diversion to hostile
+                        nation-state actors.
                       </p>
                     </div>
                   </div>
                 </div>
 
+                <div className="p-4 rounded bg-background border border-accent/30">
+                  <h4 className="font-semibold mb-3 text-accent">Threat Actor Protocol</h4>
+                  <p className="text-sm text-muted leading-relaxed">
+                    <strong>Anyone suspected of attempting to acquire technology on behalf of hostile
+                    nation-state actors or for proliferation purposes will be treated as a threat actor.</strong> This
+                    includes intelligence collection on the requester, documentation of TTPs, and coordination
+                    with relevant counterintelligence and law enforcement authorities across allied jurisdictions.
+                    We will not facilitate adversary capability development.
+                  </p>
+                </div>
+
                 <div className="pt-4 border-t border-border">
                   <p className="text-sm text-muted">
-                    <strong>We reserve the right to decline engagements</strong> that present unacceptable
-                    legal risk, involve sanctioned parties, or lack clear legitimate purpose. Clients
-                    attempting to use our services for sanctions evasion, proliferation, or unlawful
-                    activity will be immediately terminated and reported to authorities as required by law.
+                    Our vetting draws on relationships with government and intelligence community partners—we
+                    maintain ongoing coordination with relevant authorities to ensure our operations support
+                    rather than undermine national security interests. <strong>We reserve the right to decline
+                    any engagement</strong> that presents unacceptable risk, violates sanctions, or lacks
+                    defensible justification.
                   </p>
                 </div>
               </div>
