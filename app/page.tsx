@@ -1,5 +1,6 @@
 import { Hero } from '@/components/hero';
 import { ServiceCard } from '@/components/service-card';
+import { StatsShowcase } from '@/components/stats-showcase';
 import { Search, Zap, ShieldCheck, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -71,6 +72,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Stats Showcase */}
+      <StatsShowcase />
 
       {/* Evidence Engine Section */}
       <section className="py-20 border-y border-border">
