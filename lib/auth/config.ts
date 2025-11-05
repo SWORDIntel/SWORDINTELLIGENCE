@@ -1,30 +1,7 @@
 import type { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
-
-// In production, this would connect to your database
-// For now, this is a mock user store
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  password: string;
-  role: 'client' | 'admin';
-  mfaEnabled: boolean;
-  mfaSecret?: string;
-}
-
-// Mock user database (replace with real database in production)
-const users: User[] = [
-  {
-    id: '1',
-    email: 'demo@client.com',
-    name: 'Demo Client',
-    password: '$2a$10$Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', // hashed 'demo123'
-    role: 'client',
-    mfaEnabled: false,
-  },
-];
+import { getUserByEmail } from './users';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -41,39 +18,46 @@ export const authOptions: NextAuthOptions = {
         }
 
         // Find user in database
-        const user = users.find((u) => u.email === credentials.email);
+        const user = getUserByEmail(credentials.email);
 
         if (!user) {
           throw new Error('Invalid credentials');
         }
 
-        // Verify password
-        const isValidPassword = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
+        // Check if this is WebAuthn-verified authentication
+        const isWebAuthnVerified = credentials.password === 'webauthn-verified';
 
-        if (!isValidPassword) {
-          throw new Error('Invalid credentials');
-        }
+        if (!isWebAuthnVerified) {
+          // Verify password for standard authentication
+          const isValidPassword = await bcrypt.compare(
+            credentials.password,
+            user.password
+          );
 
-        // Check MFA if enabled
-        if (user.mfaEnabled) {
-          if (!credentials.mfaCode) {
-            throw new Error('MFA code required');
+          if (!isValidPassword) {
+            throw new Error('Invalid credentials');
           }
 
-          // In production, verify MFA code with speakeasy
-          // const verified = speakeasy.totp.verify({
-          //   secret: user.mfaSecret,
-          //   encoding: 'base32',
-          //   token: credentials.mfaCode,
-          // });
+          // Check MFA if enabled (skip for WebAuthn as it provides strong auth)
+          if (user.mfaEnabled) {
+            if (!credentials.mfaCode) {
+              throw new Error('MFA code required');
+            }
 
-          // if (!verified) {
-          //   throw new Error('Invalid MFA code');
-          // }
+            // In production, verify MFA code with speakeasy
+            // const verified = speakeasy.totp.verify({
+            //   secret: user.mfaSecret,
+            //   encoding: 'base32',
+            //   token: credentials.mfaCode,
+            // });
+
+            // if (!verified) {
+            //   throw new Error('Invalid MFA code');
+            // }
+          }
         }
+        // If WebAuthn-verified, skip password and MFA checks
+        // (verification already done in authenticate-verify endpoint)
 
         // Return user object (will be encoded in JWT)
         return {

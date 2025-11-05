@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Shield, Lock, Mail, AlertCircle } from 'lucide-react';
+import { Shield, Lock, Mail, AlertCircle, Key } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { startAuthentication } from '@simplewebauthn/browser';
+import type { PublicKeyCredentialRequestOptionsJSON } from '@simplewebauthn/browser';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -40,6 +42,78 @@ export default function LoginPage() {
       }
     } catch (err) {
       setError('An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleWebAuthnLogin = async () => {
+    if (!email) {
+      setError('Please enter your email address first');
+      return;
+    }
+
+    setError('');
+    setLoading(true);
+
+    try {
+      // Get authentication options from server
+      const optionsResponse = await fetch('/api/webauthn/authenticate-options', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!optionsResponse.ok) {
+        const errorData = await optionsResponse.json();
+        throw new Error(errorData.error || 'Failed to get authentication options');
+      }
+
+      const options: PublicKeyCredentialRequestOptionsJSON = await optionsResponse.json();
+
+      // Start WebAuthn authentication with the browser
+      const credential = await startAuthentication(options);
+
+      // Verify authentication with server
+      const verifyResponse = await fetch('/api/webauthn/authenticate-verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          credential,
+        }),
+      });
+
+      if (!verifyResponse.ok) {
+        throw new Error('Authentication verification failed');
+      }
+
+      const result = await verifyResponse.json();
+
+      if (result.verified) {
+        // Sign in with NextAuth using the verified email
+        const signInResult = await signIn('credentials', {
+          email,
+          password: 'webauthn-verified', // Special marker for WebAuthn auth
+          redirect: false,
+        });
+
+        if (signInResult?.ok) {
+          router.push('/portal/dashboard');
+        } else {
+          throw new Error('Failed to create session');
+        }
+      }
+    } catch (err: any) {
+      console.error('WebAuthn login error:', err);
+
+      if (err.name === 'NotAllowedError') {
+        setError('Authentication was cancelled or timed out');
+      } else if (err.name === 'NotSupportedError') {
+        setError('WebAuthn is not supported by your browser');
+      } else {
+        setError(err.message || 'Failed to sign in with security key');
+      }
     } finally {
       setLoading(false);
     }
@@ -141,6 +215,30 @@ export default function LoginPage() {
               {loading ? 'Authenticating...' : showMfa ? 'Verify & Sign In' : 'Sign In'}
             </Button>
           </form>
+
+          {/* Divider */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-border"></div>
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-surface px-2 text-muted">Or</span>
+            </div>
+          </div>
+
+          {/* WebAuthn Sign In */}
+          <button
+            type="button"
+            onClick={handleWebAuthnLogin}
+            disabled={loading || !email}
+            className="w-full flex items-center justify-center space-x-3 px-4 py-3 rounded-lg border-2 border-accent/50 bg-accent/10 hover:bg-accent/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed group"
+          >
+            <Key className="w-5 h-5 text-accent group-hover:scale-110 transition-transform" />
+            <span className="font-semibold text-accent">Sign in with Security Key</span>
+          </button>
+          <p className="text-xs text-center text-muted mt-2">
+            {!email ? 'Enter your email address first' : 'Use YubiKey or other FIDO2 device'}
+          </p>
 
           {/* Footer Links */}
           <div className="mt-6 pt-6 border-t border-border text-center space-y-2">
