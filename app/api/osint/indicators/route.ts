@@ -1,18 +1,20 @@
 /**
  * OSINT Indicators API
  *
- * Fetch threat indicators from OSINT feeds
+ * Fetch threat indicators from cached database
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth/auth-options';
-import { osintFeedManager } from '@/lib/intelligence/osint-feeds';
+import { PrismaClient, Prisma } from '@prisma/client';
 import { auditLog } from '@/lib/admin/audit-log';
+
+const prisma = new PrismaClient();
 
 /**
  * GET /api/osint/indicators
- * Fetch indicators from OSINT feeds
+ * Fetch indicators from database cache
  */
 export async function GET(request: NextRequest) {
   try {
@@ -27,10 +29,62 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search');
     const category = searchParams.get('category');
     const severity = searchParams.get('severity');
+    const type = searchParams.get('type');
+    const limit = parseInt(searchParams.get('limit') || '1000', 10);
+    const offset = parseInt(searchParams.get('offset') || '0', 10);
+
+    // Build query filters
+    const where: Prisma.OSINTIndicatorWhereInput = {
+      // Remove expired indicators
+      OR: [
+        { expiresAt: null },
+        { expiresAt: { gt: new Date() } },
+      ],
+    };
+
+    if (feedId) {
+      where.feedId = feedId;
+    }
+
+    if (search) {
+      where.value = {
+        contains: search,
+        mode: 'insensitive',
+      };
+    }
+
+    if (category) {
+      where.feed = {
+        category: category,
+      };
+    }
+
+    if (severity) {
+      where.severity = severity;
+    }
+
+    if (type) {
+      where.type = type;
+    }
 
     // Search for specific indicator
     if (search) {
-      const indicators = await osintFeedManager.searchIndicator(search);
+      const indicators = await prisma.oSINTIndicator.findMany({
+        where,
+        include: {
+          feed: {
+            select: {
+              name: true,
+              category: true,
+            },
+          },
+        },
+        take: limit,
+        orderBy: [
+          { confidence: 'desc' },
+          { lastSeenAt: 'desc' },
+        ],
+      });
 
       auditLog.log({
         userId: session.user.email,
@@ -45,87 +99,75 @@ export async function GET(request: NextRequest) {
 
       return NextResponse.json({
         success: true,
-        indicators,
+        indicators: indicators.map(formatIndicator),
         total: indicators.length,
         query: search,
       });
     }
 
-    // Fetch specific feed
-    if (feedId) {
-      const indicators = await osintFeedManager.fetchFeed(feedId);
+    // Get total count
+    const total = await prisma.oSINTIndicator.count({ where });
 
-      // Apply filters
-      let filtered = indicators;
-
-      if (category) {
-        filtered = filtered.filter((ind) => ind.tags.includes(category));
-      }
-
-      if (severity) {
-        filtered = filtered.filter((ind) => ind.severity === severity);
-      }
-
-      auditLog.log({
-        userId: session.user.email,
-        action: 'osint.feed_fetched',
-        severity: 'info',
-        success: true,
-        metadata: {
-          feedId,
-          indicators: filtered.length,
+    // Fetch indicators with pagination
+    const indicators = await prisma.oSINTIndicator.findMany({
+      where,
+      include: {
+        feed: {
+          select: {
+            name: true,
+            category: true,
+          },
         },
-      });
+      },
+      take: limit,
+      skip: offset,
+      orderBy: [
+        { severity: 'desc' }, // Critical first
+        { confidence: 'desc' },
+        { lastSeenAt: 'desc' },
+      ],
+    });
 
-      return NextResponse.json({
-        success: true,
-        feedId,
-        indicators: filtered,
-        total: filtered.length,
-      });
-    }
-
-    // Fetch all feeds
-    const allIndicators = await osintFeedManager.getAllIndicators();
-
-    // Apply filters
-    let filtered = allIndicators;
-
-    if (category) {
-      filtered = filtered.filter((ind) => ind.tags.includes(category));
-    }
-
-    if (severity) {
-      filtered = filtered.filter((ind) => ind.severity === severity);
-    }
-
-    // Group by severity for summary
-    const bySeverity = {
-      critical: filtered.filter((i) => i.severity === 'critical').length,
-      high: filtered.filter((i) => i.severity === 'high').length,
-      medium: filtered.filter((i) => i.severity === 'medium').length,
-      low: filtered.filter((i) => i.severity === 'low').length,
-      info: filtered.filter((i) => i.severity === 'info').length,
-    };
+    // Get summary statistics
+    const [bySeverity, byType] = await Promise.all([
+      prisma.oSINTIndicator.groupBy({
+        where,
+        by: ['severity'],
+        _count: true,
+      }),
+      prisma.oSINTIndicator.groupBy({
+        where,
+        by: ['type'],
+        _count: true,
+      }),
+    ]);
 
     auditLog.log({
       userId: session.user.email,
-      action: 'osint.all_indicators_fetched',
+      action: feedId ? 'osint.feed_fetched' : 'osint.all_indicators_fetched',
       severity: 'info',
       success: true,
       metadata: {
-        total: filtered.length,
-        bySeverity,
+        feedId,
+        total,
+        limit,
+        offset,
       },
     });
 
     return NextResponse.json({
       success: true,
-      indicators: filtered.slice(0, 1000), // Limit to 1000 for performance
-      total: filtered.length,
+      indicators: indicators.map(formatIndicator),
+      total,
+      limit,
+      offset,
       summary: {
-        bySeverity,
-        byType: this.groupByType(filtered),
+        bySeverity: Object.fromEntries(
+          bySeverity.map((s) => [s.severity, s._count])
+        ),
+        byType: Object.fromEntries(
+          byType.map((t) => [t.type, t._count])
+        ),
       },
     });
   } catch (error) {
@@ -137,10 +179,23 @@ export async function GET(request: NextRequest) {
   }
 }
 
-function groupByType(indicators: any[]): Record<string, number> {
-  const byType: Record<string, number> = {};
-  indicators.forEach((ind) => {
-    byType[ind.type] = (byType[ind.type] || 0) + 1;
-  });
-  return byType;
+/**
+ * Format indicator for API response
+ */
+function formatIndicator(ind: any) {
+  return {
+    id: ind.id,
+    type: ind.type,
+    value: ind.value,
+    severity: ind.severity,
+    confidence: ind.confidence,
+    description: ind.description,
+    tags: ind.tags,
+    metadata: ind.metadata,
+    source: ind.feed.name,
+    category: ind.feed.category,
+    firstSeenAt: ind.firstSeenAt,
+    lastSeenAt: ind.lastSeenAt,
+    expiresAt: ind.expiresAt,
+  };
 }

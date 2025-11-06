@@ -22,18 +22,33 @@ export default function SecuritySettingsPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  // Mock data - in production, fetch from API
+  // Fetch authenticators from API
   useEffect(() => {
-    // This would be a real API call
-    setDevices([
-      {
-        id: '1',
-        deviceName: 'YubiKey 5 NFC',
-        createdAt: '2024-10-15',
-        lastUsed: '2024-11-04',
-      },
-    ]);
-  }, []);
+    const fetchAuthenticators = async () => {
+      try {
+        const response = await fetch('/api/auth/webauthn/authenticators');
+        if (response.ok) {
+          const data = await response.json();
+          setDevices(
+            data.authenticators.map((auth: any) => ({
+              id: auth.id,
+              deviceName: auth.name || 'Unnamed Device',
+              createdAt: new Date(auth.registeredAt).toLocaleDateString(),
+              lastUsed: auth.lastUsedAt
+                ? new Date(auth.lastUsedAt).toLocaleDateString()
+                : undefined,
+            }))
+          );
+        }
+      } catch (error) {
+        console.error('Failed to fetch authenticators:', error);
+      }
+    };
+
+    if (session) {
+      fetchAuthenticators();
+    }
+  }, [session]);
 
   const handleRegisterDevice = async () => {
     if (!deviceName.trim()) {
@@ -47,50 +62,61 @@ export default function SecuritySettingsPage() {
 
     try {
       // Get registration options from server
-      const optionsResponse = await fetch('/api/webauthn/register-options', {
+      const optionsResponse = await fetch('/api/auth/webauthn/register/options', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: session?.user?.email,
+        }),
       });
 
       if (!optionsResponse.ok) {
         throw new Error('Failed to get registration options');
       }
 
-      const options: PublicKeyCredentialCreationOptionsJSON = await optionsResponse.json();
+      const optionsData = await optionsResponse.json();
+      const options: PublicKeyCredentialCreationOptionsJSON = optionsData.options;
 
       // Start WebAuthn registration with the browser
       const credential = await startRegistration(options);
 
       // Verify registration with server
-      const verifyResponse = await fetch('/api/webauthn/register-verify', {
+      const verifyResponse = await fetch('/api/auth/webauthn/register/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          credential,
-          deviceName: deviceName.trim(),
+          response: credential,
+          authenticatorName: deviceName.trim(),
         }),
       });
 
       if (!verifyResponse.ok) {
-        throw new Error('Failed to verify registration');
+        const errorData = await verifyResponse.json();
+        throw new Error(errorData.error || 'Failed to verify registration');
       }
 
       const result = await verifyResponse.json();
 
-      if (result.verified) {
+      if (result.success) {
         setSuccess('Security key registered successfully!');
         setDeviceName('');
         setShowAddDevice(false);
 
-        // Refresh devices list (in production, fetch from API)
-        setDevices([
-          ...devices,
-          {
-            id: Date.now().toString(),
-            deviceName: deviceName.trim(),
-            createdAt: new Date().toISOString().split('T')[0],
-          },
-        ]);
+        // Refresh devices list from API
+        const listResponse = await fetch('/api/auth/webauthn/authenticators');
+        if (listResponse.ok) {
+          const data = await listResponse.json();
+          setDevices(
+            data.authenticators.map((auth: any) => ({
+              id: auth.id,
+              deviceName: auth.name || 'Unnamed Device',
+              createdAt: new Date(auth.registeredAt).toLocaleDateString(),
+              lastUsed: auth.lastUsedAt
+                ? new Date(auth.lastUsedAt).toLocaleDateString()
+                : undefined,
+            }))
+          );
+        }
       }
     } catch (err: any) {
       console.error('Registration error:', err);
@@ -112,9 +138,22 @@ export default function SecuritySettingsPage() {
       return;
     }
 
-    // In production, make API call to remove device
-    setDevices(devices.filter((d) => d.id !== deviceId));
-    setSuccess('Security key removed');
+    try {
+      const response = await fetch(`/api/auth/webauthn/authenticators?id=${deviceId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to remove device');
+      }
+
+      // Update local state
+      setDevices(devices.filter((d) => d.id !== deviceId));
+      setSuccess('Security key removed successfully');
+    } catch (error) {
+      console.error('Failed to remove device:', error);
+      setError('Failed to remove security key. Please try again.');
+    }
   };
 
   return (

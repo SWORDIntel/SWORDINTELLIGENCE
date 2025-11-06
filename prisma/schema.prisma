@@ -40,9 +40,41 @@ model User {
   auditLogs          AuditLog[]
   heartbeats         Heartbeat[]
   locations          UserLocation[]
+  authenticators     Authenticator[]
 
   @@index([email])
   @@index([role])
+}
+
+// ============================================================================
+// WEBAUTHN / HARDWARE AUTHENTICATION
+// ============================================================================
+
+model Authenticator {
+  id                    String   @id @default(uuid())
+  userId                String
+  credentialID          String   @unique // Base64URL encoded
+  credentialPublicKey   String   @db.Text // Base64URL encoded public key
+  counter               Int      @default(0)
+  credentialDeviceType  String?  // "singleDevice" or "multiDevice"
+  credentialBackedUp    Boolean  @default(false)
+  transports            String[] // ["usb", "nfc", "ble", "internal"]
+
+  // Authenticator type detection
+  authenticatorType     String   // yubikey, cac, fingerprint, platform, generic
+  name                  String?  // User-friendly name
+  aaguid                String?  // Authenticator Attestation GUID
+
+  // Metadata
+  registeredAt          DateTime @default(now())
+  lastUsedAt            DateTime?
+
+  // Relationships
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([credentialID])
+  @@index([authenticatorType])
 }
 
 // ============================================================================
@@ -374,4 +406,57 @@ model ThreatIOC {
   @@index([threatId])
   @@index([iocType])
   @@index([value])
+}
+
+// ============================================================================
+// OSINT FEED INTELLIGENCE CACHE
+// ============================================================================
+
+model OSINTFeed {
+  id                String   @id // Feed ID from config (e.g., 'alienvault-otx')
+  name              String
+  category          String   // malware, phishing, c2, infrastructure, etc.
+  enabled           Boolean  @default(true)
+  lastFetchedAt     DateTime?
+  lastSuccessAt     DateTime?
+  lastErrorAt       DateTime?
+  lastErrorMessage  String?
+  fetchCount        Int      @default(0)
+  indicatorCount    Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relationships
+  indicators        OSINTIndicator[]
+
+  @@index([category])
+  @@index([enabled])
+  @@index([lastFetchedAt])
+}
+
+model OSINTIndicator {
+  id             String   @id @default(uuid())
+  feedId         String
+  type           String   // ip, domain, url, hash, email, onion, wallet
+  value          String
+  severity       String   // critical, high, medium, low, info
+  confidence     Int      // 0-100
+  description    String?  @db.Text
+  tags           String[] // Array of tags
+  metadata       Json?    // Additional feed-specific data
+  firstSeenAt    DateTime @default(now())
+  lastSeenAt     DateTime @default(now())
+  expiresAt      DateTime? // Some indicators have expiration
+
+  // Relationships
+  feed           OSINTFeed @relation(fields: [feedId], references: [id], onDelete: Cascade)
+
+  @@unique([feedId, type, value]) // Prevent duplicates
+  @@index([feedId])
+  @@index([type])
+  @@index([value])
+  @@index([severity])
+  @@index([confidence])
+  @@index([lastSeenAt])
+  @@index([expiresAt])
 }

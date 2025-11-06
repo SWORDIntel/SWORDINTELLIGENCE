@@ -8,7 +8,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth/auth-options';
 import { verifyRegistrationResponseForUser } from '@/lib/auth/webauthn';
+import { PrismaClient } from '@prisma/client';
 import { auditLog } from '@/lib/admin/audit-log';
+
+const prisma = new PrismaClient();
 
 export async function POST(request: NextRequest) {
   try {
@@ -27,7 +30,7 @@ export async function POST(request: NextRequest) {
       authenticatorName
     );
 
-    if (!verification.verified) {
+    if (!verification.verified || !verification.authenticator) {
       auditLog.log({
         userId: session.user.email,
         action: 'webauthn.registration_failed',
@@ -46,23 +49,51 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Get user from database
+    const user = await prisma.user.findUnique({
+      where: { email: session.user.email },
+    });
+
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    // Store authenticator in database
+    const auth = verification.authenticator;
+    const storedAuthenticator = await prisma.authenticator.create({
+      data: {
+        userId: user.id,
+        credentialID: auth.credentialID.toString('base64url'),
+        credentialPublicKey: auth.credentialPublicKey.toString('base64url'),
+        counter: auth.counter,
+        credentialDeviceType: auth.credentialDeviceType,
+        credentialBackedUp: auth.credentialBackedUp,
+        transports: auth.transports || [],
+        authenticatorType: auth.type,
+        name: auth.name,
+        aaguid: auth.aaguid,
+      },
+    });
+
     auditLog.log({
       userId: session.user.email,
       action: 'webauthn.authenticator_registered',
       severity: 'info',
       success: true,
       metadata: {
-        authenticatorType: verification.authenticator?.type,
-        authenticatorName: verification.authenticator?.name,
+        authenticatorId: storedAuthenticator.id,
+        authenticatorType: auth.type,
+        authenticatorName: auth.name,
       },
     });
 
     return NextResponse.json({
       success: true,
       authenticator: {
-        type: verification.authenticator?.type,
-        name: verification.authenticator?.name,
-        registeredAt: verification.authenticator?.registeredAt,
+        id: storedAuthenticator.id,
+        type: storedAuthenticator.authenticatorType,
+        name: storedAuthenticator.name,
+        registeredAt: storedAuthenticator.registeredAt,
       },
     });
   } catch (error: any) {

@@ -11,7 +11,10 @@
     "start": "next start",
     "start:ws": "node dist/server/websocket.js",
     "start:all": "concurrently \"npm start\" \"npm run start:ws\"",
-    "lint": "next lint"
+    "lint": "next lint",
+    "osint:sync": "tsx scripts/osint-sync-worker.ts",
+    "osint:sync:once": "tsx scripts/osint-sync-worker.ts --once",
+    "db:migrate": "bash scripts/apply-migration.sh"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",
