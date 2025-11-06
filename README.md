@@ -44,7 +44,7 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 
 ### Strategic Capabilities (Public)
 
-- **Shenzhen Supply Chain Intelligence**: Full access to electronics manufacturing ecosystem
+- **Shenzhen Supply Chain Intelligence**: Full access to electronics manufacturing ecosystem(Special Inventory to NATO vetted contractors/groups)
 - **Russian Technology Access**: Procurement and analysis capability for dual-use tech (lawful purposes, rigorous vetting)
 - **Global Rapid Response**: UK-based with 24-hour deployment capability worldwide
 - **Intelligence Community Coordination**: Relationships with government/IC partners (details classified)
