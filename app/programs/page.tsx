@@ -162,40 +162,46 @@ export default function ProgramsPage() {
               </div>
               <div>
                 <h2 className="text-3xl font-bold mb-2">SWORDCOMM</h2>
-                <p className="text-lg text-accent">APT-Level Secure Communications Platform</p>
+                <p className="text-lg text-accent">APT-Level Secure Mobile Communications</p>
               </div>
             </div>
             <div className="pl-16 space-y-4">
               <p className="text-muted leading-relaxed">
-                Real-time encrypted messaging system with advanced traffic obfuscation, dead drop triggers,
-                and steganographic payload delivery.
+                Military-grade secure messaging for Android/iOS with real-time translation,
+                post-quantum encryption, and hypervisor-level threat detection.
               </p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start">
                   <span className="text-accent mr-2">•</span>
-                  <span>WebSocket-based real-time messaging with database persistence</span>
+                  <span>Kyber-1024 post-quantum encryption with forward secrecy</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent mr-2">•</span>
-                  <span>APT41-inspired traffic obfuscation (message padding, decoy messages, timing randomization)</span>
+                  <span>EL2 hypervisor detection with adaptive countermeasures (99% accuracy)</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent mr-2">•</span>
-                  <span>Dead drop system: time-based, heartbeat, and geographic triggers</span>
+                  <span>Real-time Danish-English translation with on-device AI</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent mr-2">•</span>
-                  <span>LSB steganography for hiding files in carrier images</span>
+                  <span>Signal Protocol-based with enhanced anti-surveillance features</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent mr-2">•</span>
-                  <span>End-to-end encryption with forward secrecy (double ratchet)</span>
+                  <span>Intimate Protection Mode: per-contact maximum security</span>
                 </li>
               </ul>
-              <div className="pt-4">
+              <div className="pt-4 flex items-center space-x-3">
                 <span className="inline-block px-3 py-1 rounded-full bg-green-500/10 text-green-500 text-xs font-semibold">
                   OPERATIONAL
                 </span>
+                <Link
+                  href="/programs/swordcomm"
+                  className="text-sm text-accent hover:underline"
+                >
+                  View Details →
+                </Link>
               </div>
             </div>
           </div>
