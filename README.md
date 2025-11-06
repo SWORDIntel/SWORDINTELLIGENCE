@@ -116,7 +116,7 @@ All prospective clients undergo:
 - Business legitimacy assessment
 - End-use and intent analysis
 
-**Threat Actor Protocol**: Anyone suspected of attempting to acquire technology for hostile nation-states will be treated as a threat actor (intelligence collection, TTP documentation, IC coordination).
+**Threat Actor Protocol**: Anyone suspected of attempting to acquire technology for hostile nation-states will be treated as a threat actor and dealt with accordingly.
 
 ---
 
