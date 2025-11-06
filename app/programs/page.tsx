@@ -116,40 +116,46 @@ export default function ProgramsPage() {
               </div>
               <div>
                 <h2 className="text-3xl font-bold mb-2">KYBERLOCK</h2>
-                <p className="text-lg text-accent">Biometric Hardware Authentication System</p>
+                <p className="text-lg text-accent">Post-Quantum File Encryption with Hidden Volumes</p>
               </div>
             </div>
             <div className="pl-16 space-y-4">
               <p className="text-muted leading-relaxed">
-                Multi-factor authentication platform supporting FIDO2/WebAuthn hardware security keys,
-                biometric authenticators, and PKI smartcards.
+                High-performance file encryption combining CRYSTALS-Kyber (ML-KEM-768) with traditional
+                algorithms for quantum-resistant data protection. Features hidden volumes and plausible deniability.
               </p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start">
                   <span className="text-accent mr-2">•</span>
-                  <span>WebAuthn/FIDO2 protocol implementation with database persistence</span>
+                  <span>Hybrid encryption: ML-KEM-768 (post-quantum) + X25519 (classical)</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent mr-2">•</span>
-                  <span>YubiKey 5 Series support (USB, NFC, Lightning)</span>
+                  <span>Hidden volumes with plausible deniability protection</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent mr-2">•</span>
-                  <span>CAC/PIV smartcard integration for government/DoD personnel</span>
+                  <span>Cross-platform: Windows, macOS, Linux with GTK3 GUI</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent mr-2">•</span>
-                  <span>Platform authenticators (Face ID, Touch ID, Windows Hello, fingerprint readers)</span>
+                  <span>Cloud sync support: S3, WebDAV, zero-knowledge providers</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent mr-2">•</span>
-                  <span>Hardware Security Module (HSM) integration for cryptographic operations</span>
+                  <span>Hardware token support with Argon2id key derivation</span>
                 </li>
               </ul>
-              <div className="pt-4">
+              <div className="pt-4 flex items-center space-x-3">
                 <span className="inline-block px-3 py-1 rounded-full bg-green-500/10 text-green-500 text-xs font-semibold">
                   OPERATIONAL
                 </span>
+                <Link
+                  href="/programs/kyberlock"
+                  className="text-sm text-accent hover:underline"
+                >
+                  View Details →
+                </Link>
               </div>
             </div>
           </div>
