@@ -34,9 +34,9 @@ export default function SwordcommPage() {
             </div>
           </div>
           <p className="text-xl text-muted leading-relaxed max-w-4xl">
-            Military-grade secure messaging for Android and iOS with real-time translation,
+            Military-grade secure messaging for Android and iOS with on-device real-time translation,
             post-quantum encryption, and advanced countermeasures against nation-state surveillance.
-            Built on Signal Protocol with hypervisor-level threat detection.
+            Built on Signal Protocol with hypervisor-level threat detection. Fully functional offline with no server dependencies.
           </p>
           <div className="flex flex-wrap gap-3 mt-8">
             <span className="px-4 py-2 rounded-lg bg-accent/10 text-accent text-sm font-semibold">
@@ -116,15 +116,15 @@ export default function SwordcommPage() {
               </li>
               <li className="flex items-start">
                 <span className="text-accent mr-2">•</span>
-                <span>On-device AI with INT8 quantization</span>
+                <span><strong>On-device AI primary</strong> with INT8 quantization (MarianMT/OPUS)</span>
               </li>
               <li className="flex items-start">
                 <span className="text-accent mr-2">•</span>
-                <span>Network offloading to secure servers</span>
+                <span>Optional network offloading to secure servers (fallback to on-device if unavailable)</span>
               </li>
               <li className="flex items-start">
                 <span className="text-accent mr-2">•</span>
-                <span>Encrypted translation caching</span>
+                <span>Encrypted translation caching for performance</span>
               </li>
             </ul>
           </div>

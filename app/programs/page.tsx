@@ -167,8 +167,8 @@ export default function ProgramsPage() {
             </div>
             <div className="pl-16 space-y-4">
               <p className="text-muted leading-relaxed">
-                Military-grade secure messaging for Android/iOS with real-time translation,
-                post-quantum encryption, and hypervisor-level threat detection.
+                Military-grade secure messaging for Android/iOS with on-device real-time translation,
+                post-quantum encryption, and hypervisor-level threat detection. Fully functional offline.
               </p>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start">
@@ -181,7 +181,7 @@ export default function ProgramsPage() {
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent mr-2">•</span>
-                  <span>Real-time Danish-English translation with on-device AI</span>
+                  <span>On-device Danish-English translation (no server required, optional network offload)</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-accent mr-2">•</span>
