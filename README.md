@@ -2,7 +2,7 @@
 
 **Independent private intelligence firm specializing in Web3 and cyber threats.**
 
-> Adversaries don't play fair. We do what's lawful—and effective.
+> Adversaries don't play fair. NOr do we,except the laws on our side
 
 ---
 
