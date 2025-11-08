@@ -33,7 +33,7 @@ SWORD Intelligence helps funds, founders, enterprises, and government clients pr
 
 ### Core Focus Areas
 
-- **Threat Actor Hunter**: I will find your target,i will dissect their life,TTP's and ssomehow become their best friend right up until the door gets kicked down...no target too much give the right pay.
+- **Threat Actor Hunter**: I will find your target,i will dissect their life,TTP's and somehow become their best friend right up until the door gets kicked down...no target too much give the right pay.
 - **Cyber Threat Intelligence**: APT tracking, nation-state operations, infrastructure analysis , focus on APT-41 in particular they seem to be very fond of me even burnt 11 0days trying to hit me.
 - **Counter-Narcotics Intelligence**: Fighting synthetic opioid supply chains and other components of the chemical warfare PRC program..at the same time i liase with chinese labs encouraging safer drugs.
 - **Web3 & Crypto Crime**:asset tracking and detainment given the right budget ill do it myself, ransomware negotiator andasset recovery , sanctioned red team ops all the way up to nation state level with the paperwork.
