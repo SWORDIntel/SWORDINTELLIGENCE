@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="ops">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SWORD Intelligence</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <meta name="description" content="Post-Quantum Encrypted Intelligence Platform built with ASP.NET Core">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container navbar-content">
+                <a class="navbar-brand" href="/">
+                    <span class="brand-sword">SWORD</span>
+                    <span class="brand-intel">Intelligence</span>
+                </a>
+
+                <div class="navbar-menu">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/about" class="nav-link">About</a>
+                    <a href="/services" class="nav-link">Services</a>
+                    <a href="/programs" class="nav-link">Programs</a>
+                    <a href="/portal/login" class="nav-link nav-link-portal">Portal</a>
+
+                    <button class="theme-toggle" onclick="toggleTheme()">
+                        <span class="theme-icon">🌓</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>SWORD Intelligence</h3>
+                <p>Post-Quantum Encrypted Intelligence Platform</p>
+                <p class="tech-badge">Built with ASP.NET Core 8.0</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="/services/intelligence">Intelligence</a></li>
+                    <li><a href="/services/response">Response</a></li>
+                    <li><a href="/services/resilience">Resilience</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Programs</h4>
+                <ul>
+                    <li><a href="/programs/kp14">KP14 Malware Analysis</a></li>
+                    <li><a href="/programs/kyberlock">Kyberlock</a></li>
+                    <li><a href="/programs/swordcomm">SwordComm</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/terms">Terms of Service</a></li>
+                    <li><a href="/methods">Lawful Methods</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; @DateTime.Now.Year SWORD Intelligence. All rights reserved.</p>
+                <p class="security-notice">🔒 ML-KEM-1024 Post-Quantum Encrypted</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'ops' ? 'advisory' : 'ops';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load theme preference
+        const savedTheme = localStorage.getItem('theme') || 'ops';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</body>
+</html>
